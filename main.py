@@ -26,7 +26,7 @@ BACKGROUND = DARK_BLUE
 BUTTON_COLOR1 = PASTEL_CYAN
 BUTTON_COLOR2 = PASTEL_BLUE
 
-point_num = 100
+point_num = 1000
 point_radius = 5
 edge_color = YELLOW
 
@@ -34,7 +34,7 @@ EPS = 1e-9
 
 def Std():
     screen.fill(BACKGROUND)
-    pygame.time.wait(30)
+    pygame.time.wait(0)
 
 def Quit():
     pygame.quit()
@@ -100,14 +100,18 @@ def GeneratePoints():
     y_upper = int(H / 10 * 9)
 
     for repeat in range(point_num):
-        x = random.randint(x_lower,x_upper)
-        y = random.randint(y_lower,y_upper)
+        while True:
+            x = random.randint(x_lower,x_upper)
+            y = random.randint(y_lower,y_upper)
 
-        if (x,y) in history:
-            continue
+            if (x,y) in history:
+                continue
 
-        history.add((x,y))
-        ret.append((x,y))
+            history.add((x,y))
+            ret.append((x,y))
+            break
+
+
 
     return ret
 
@@ -123,6 +127,7 @@ def Cross(lhs,rhs):
 
 def Build():
     Points = GeneratePoints()
+    assert(len(Points) == point_num)
     Points.sort()
 
     start_time = time.time()
